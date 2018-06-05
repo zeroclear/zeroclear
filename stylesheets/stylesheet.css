@@ -134,6 +134,7 @@ strong {
 }
 
 img {
+  /*
   position: relative;
   margin: 0 auto;
   max-width: 739px;
@@ -146,6 +147,7 @@ img {
   -moz-box-shadow: 0 0 5px #ebebeb;
   -o-box-shadow: 0 0 5px #ebebeb;
   -ms-box-shadow: 0 0 5px #ebebeb;
+  */
 }
 
 p img {
