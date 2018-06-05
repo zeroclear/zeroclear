@@ -135,6 +135,7 @@ strong {
 
 img {
   /*
+  图片样式与动画对象冲突
   position: relative;
   margin: 0 auto;
   max-width: 739px;
