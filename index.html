@@ -158,13 +158,13 @@ this.xspeed=0;
 this.yspeed=0;
 this.curframe=0;
 
-this.obj=new Image();	//document.createElement("img"); 
-this.obj.src=res;
-//this.obj.width=this.width;
-//this.obj.height=this.height;
-this.obj.scrollTop=0;
-this.obj.scrollLeft=0;
+this.obj=document.createElement("div");
+this.obj.style.backgroundRepeat="no-repeat";
+this.obj.style.background="url("+res+")";
+this.obj.style.backgroundPosition="0px 0px";
 this.obj.style.position="absolute";
+this.obj.style.width=this.width+"px";
+this.obj.style.height=this.height+"px";
 document.getElementById('bk').appendChild(this.obj);
 
 this.update=function()
@@ -172,43 +172,54 @@ this.update=function()
 this.curframe++;
 if (this.curframe==this.frame)
 this.curframe=0;
+this.obj.style.backgroundPosition=this.curframe*this.width+"px 0px";
 
-//rect (top, right, bottom, left)
-this.obj.style.clip="rect(0px "+(this.curframe+1)*this.width+"px "+this.height+"px "+this.curframe*this.width+"px)";
-this.obj.style.left=this.x-this.curframe*this.width+"px";
+this.obj.style.left=this.x+"px";
 this.obj.style.top=this.y+"px";
-this.obj.style.transform = 'rotate('+this.rotate+'deg)';
-this.obj.style.transformOrigin=(this.curframe+0.5)*100/this.frame+"% 50%";
+
+this.obj.style.transform='rotate('+this.rotate+'deg)';
 }
 
 }
-
 function ObjChaseAI()
 {
-img1.rotate=Math.atan((img2.y-img1.y)/(img2.x-img1.x))*(180/3.14)+180;
-img1.rotate%=360;
-//setInterval的回调中，this指向window对象，而不是对象本身
-//使用bind或箭头表达式来修复
-img1.update();//.bind(img1);
-}
+img1.rotate=Math.atan((img2.y-img1.y)/(img2.x-img1.x))*(180/3.14);
+if (img2.x-img1.x>=0)
+img1.rotate+=180;
 
+img1.rotate%=360;
+img1.x+=img1.xspeed;
+img1.y+=img1.yspeed;
+img1.xspeed=(img2.x-img1.x)/10;
+img1.yspeed=(img2.y-img1.y)/10;
+
+img1.update();
+}
 function ObjRunAI()
 {
+img2.x+=img2.xspeed;
 img2.y+=img2.yspeed;
+
 if (img2.y>500)
 img2.yspeed=-10;
 else if (img2.y<300)
 img2.yspeed=10;
+
+if (img2.x>=document.body.clientWidth-img2.width)
+img2.xspeed*=-1;
+else if (img2.x<=img2.width)
+img2.xspeed*=-1;
+
 img2.update();
 }
 
 var img1=new Sprite("chase.png",58,27,2);
+var img2=new Sprite("run.png",156,19,6);
 img1.x=200;
 img1.y=400;
-
-var img2=new Sprite("run.png",156,19,6);
 img2.x=400;
 img2.y=400;
+img2.xspeed=10;
 img2.yspeed=10;
 
 img1.update();
