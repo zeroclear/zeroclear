@@ -64,21 +64,33 @@ blocks[i].style.background="#000000";
 else
 blocks[i].style.background="#FFFFFF";
 }
+var firstcolor=blocks[0].color;
+for (i=0;i<blocks.length;i++)
+{
+if (blocks[i].color!=firstcolor)
+return ;
+}
+setTimeout(showweak,200);
+}
+
+function showweak()
+{
+alert("进入虚弱状态...");
+reset();
 }
 </script>
 
 <select id="droplistctl" onchange="reset()">
-  <option>6个球</option>
-  <option>7个球</option>
-  <option>8个球</option>
-  <option>9个球</option>
-  <option>10个球</option>
+<option>6个球</option>
+<option>7个球</option>
+<option>8个球</option>
+<option>9个球</option>
+<option>10个球</option>
 </select>
 
 <script>
 reset();
 </script>
-
 
 </body>
 </html>
