@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>DNF暗黑神殿</title>
+</head>
+<body>
+<style>
+.block
+{
+width:80px;
+height:80px;
+border-radius:40px;
+border:2px solid #000000;
+position:absolute;
+}
+</style>
+<script>
+function reset()
+{
+var blocks=document.getElementsByClassName("block");
+while (blocks.length>0)
+document.body.removeChild(blocks[0]);
+
+var droplist=document.getElementById("droplistctl");
+var count=droplist.options.selectedIndex+6;
+for (i=0;i<count;i++)
+{
+var block=document.createElement("div");
+block.className="block";
+block.style.left=50+i*100+"px";
+block.id="id"+i;
+block.index=i;
+block.color=Math.random()>0.5?true:false;
+block.onclick=updatecolor;
+document.body.appendChild(block);
+}
+drawblock();
+}
+
+function updatecolor()
+{
+if (this.index!=0)
+{
+var prev=document.getElementById("id"+(this.index-1));
+prev.color=!prev.color;
+}
+var maxcount=document.getElementsByClassName("block").length;
+if (this.index!=maxcount-1)
+{
+var next=document.getElementById("id"+(this.index+1));
+next.color=!next.color;
+}
+this.color=!this.color;
+drawblock();
+}
+
+function drawblock()
+{
+var blocks=document.getElementsByClassName("block");
+for (i=0;i<blocks.length;i++)
+{
+if (blocks[i].color)
+blocks[i].style.background="#000000";
+else
+blocks[i].style.background="#FFFFFF";
+}
+}
+</script>
+
+<select id="droplistctl" onchange="reset()">
+  <option>6个球</option>
+  <option>7个球</option>
+  <option>8个球</option>
+  <option>9个球</option>
+  <option>10个球</option>
+</select>
+
+<script>
+reset();
+</script>
+
+
+</body>
+</html>
